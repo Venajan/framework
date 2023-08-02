@@ -15,9 +15,19 @@ public class GameTest {
     Game game = new Game();
 
     @Test
+    public void findInfoByName() {
+        game.register("Player1", player1);
+
+        Player expected = player1;
+        Player actual = game.findInfo("Player1");
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
     public void firstPlayerWon() {
-        game.register(player1);
-        game.register(player2);
+        game.register("Player1", player1);
+        game.register("Player2", player2);
 
         int expected = 1;
         int actual = game.round("Player2", "Player1");
@@ -26,8 +36,8 @@ public class GameTest {
 
     @Test
     public void secondPlayerWon() {
-        game.register(player1);
-        game.register(player2);
+        game.register("Player1", player1);
+        game.register("Player2", player2);
 
         int expected = 2;
         int actual = game.round("Player1", "Player2");
@@ -36,8 +46,8 @@ public class GameTest {
 
     @Test
     public void playersWereEqual() {
-        game.register(player3);
-        game.register(player5);
+        game.register("Player3", player3);
+        game.register("Player5", player5);
 
         int expected = 0;
         int actual = game.round("Player3", "Player5");
@@ -46,8 +56,8 @@ public class GameTest {
 
     @Test
     public void firstPlayerNotRegistered() {
-        game.register(player1);
-        game.register(player2);
+        game.register("Player1", player1);
+        game.register("Player2", player2);
 
         Assertions.assertThrows(NotRegisteredException.class, () -> {
             game.round("Player1", "Player3");
@@ -56,8 +66,8 @@ public class GameTest {
 
     @Test
     public void secondPlayerNotRegistered() {
-        game.register(player1);
-        game.register(player2);
+        game.register("Player1", player1);
+        game.register("Player2", player2);
 
         Assertions.assertThrows(NotRegisteredException.class, () -> {
             game.round("Player2", "Player4");
@@ -66,8 +76,8 @@ public class GameTest {
 
     @Test
     public void bothPlayersNotRegistered() {
-        game.register(player4);
-        game.register(player5);
+        game.register("Player4", player4);
+        game.register("Player5", player5);
 
         Assertions.assertThrows(NotRegisteredException.class, () -> {
             game.round("Player3", "Player2");
